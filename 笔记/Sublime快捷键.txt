@@ -1,0 +1,9 @@
+Ctrl+KU 改为大写
+Ctrl+KL 改为小写
+Ctrl+M 光标跳至对应的括号
+Alt+. 闭合当前标签
+Ctrl+F2 设置书签
+F2 下一个书签
+Shift+F2 上一个书签
+
+来自 <http://ce.sysu.edu.cn/hope/Item.aspx?id=106853> 

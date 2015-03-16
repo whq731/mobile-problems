@@ -1,0 +1,3 @@
+ios下面a标签点击会失效
+
+需要在在初始化的opition里加个click:true

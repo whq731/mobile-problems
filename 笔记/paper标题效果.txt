@@ -1,0 +1,42 @@
+function pa(a,b){for(var c=a.split("%s"),d="",f=Array.prototype.slice.call(arguments,1);f.length&&1<c.length;)d+=c.shift()+f.shift();return d+c.join("%s")} 
+
+
+this.d.style.webkitMaskImage = pa("-webkit-gradient(radial, 17 17, %s, 17 17, %s,from(rgba(0, 0, 0, 1)),color-stop(0.5, rgba(0, 0, 0, 0.2)),to(rgba(0, 0, 0, 1)))", Math.floor(this.coords[0]), Math.floor(this.coords[0] + 15))
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+<img id="logo" style="width: 123px;" src="http://img4.ddimg.cn/header/header2014/logo_dang.jpg">
+<script>
+var isAnim = false;
+var timer;
+var delay = 1; // 修改这个让效果减速
+var start = -10;
+var test = document.getElementById('logo');
+var end = parseInt(test.style.width);
+function anim() {
+  if (start > end) {
+    clearTimeout(timer);
+    start = 0;
+    isAnim = false;
+  } else {
+    test.style.webkitMaskImage = "-webkit-gradient(radial, 17 17, " + start + ", 17 17, " + (start + 25) + ", from(rgba(0, 0, 0, 1)),color-stop(0.5, rgba(0, 0, 0, 0.2)),to(rgba(0, 0, 0, 1)))";
+    timer = setTimeout(anim, delay);
+    start++;
+  }
+}
+test.onmouseover = function () {
+  if (!isAnim) {
+    isAnim = true;
+    anim();
+  }
+}
+</script>
+</body>
+</html>
+

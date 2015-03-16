@@ -1,0 +1,22 @@
+无论是Sass还是Less，
+都是css预处理的解决方案：
+
+用一种专门的编程语言，进行网页样式设计，然后再编译成正常的CSS文件。
+
+使用css预处理 “高效省时地编写出简单可维护的模块化css 代码”成为可能
+很饶，看下具体的。
+Sass 能做什么：
+Sass 引进了多种编程特性，包括变量、样式的逻辑嵌套、混入 (mixin)、参数和继承。
+
+http://www.ruanyifeng.com/blog/2012/06/sass.html
+
+
+图形界面工具:
+http://koala-app.com/
+国人开发的免费工具
+
+http://incident57.com/codekit/
+Mac高富帅不差钱可以用
+
+
+利用gulp也可以自动化编译为css

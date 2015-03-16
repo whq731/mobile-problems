@@ -1,0 +1,16 @@
+1. 影响文档流的属性（比如：display, position, float, clear, visibility, table-layout等） 
+   2. 自身盒模型的属性（比如：width, height, margin, padding, border等） 
+   3. 排版相关属性（比如：font, line-height, text-align, text-indent, vertical-align等等） 
+   4. 装饰性属性（比如：color, background, opacity, cursor等） 
+   5. 生成内容的属性（比如：content, list-style, quotes等） 
+
+来自 <http://kevinpeng.iteye.com/blog/677599> 
+
+csscomb.js 插件
+
+来自 <https://github.com/csscomb/csscomb.js/blob/master/doc/options.md> 
+
+
+zen.json
+的书写顺序很舒服
+来自 <https://github.com/csscomb/csscomb.js/blob/master/config/zen.json> 

@@ -1,0 +1,64 @@
+Device compatibility: iPhone/Ipod touch >=3.1.1, iPad >=3.2, Android >=1.6, Desktop Webkit, Firefox, Opera desktop/mobile.
+
+来自 <http://cubiq.org/iscroll-4> 
+
+scroll遇到Select不能选择下拉的处理
+在handleTarget函数方法开始加入：
+var theTarget = e.target; 
+if (theTarget != null && theTarget.tagName == ‘SELECT’) { 
+return false;
+}
+ 
+第二步：
+在 touchStart函数处即_start()处必须加入:
+if (e.target.tagName != "SELECT") 
+{ 
+     e.preventDefault(); 
+     e.stopPropagation();
+} 
+
+
+Scroll参数以及其代表的意思：
+hScroll: true, //是否水平滚动
+vScroll: true, //是否垂直滚动
+x: 0, //滚动水平初始位置
+y: 0, //滚动垂直初始位置
+bounce: true, //是否超过实际位置反弹
+bounceLock: false, //当内容少于滚动是否可以反弹，这个实际用处不大
+momentum: true, //动量效果，拖动惯性
+lockDirection: true,
+//当水平滚动和垂直滚动同时生效时，当拖动开始是否锁定另一边的拖动
+useTransform: true, //是否使用CSS形变
+useTransition: false, //是否使用CSS变换
+topOffset: 0, //已经滚动的基准值(一般情况用不到)
+checkDOMChanges: false, //是否自动检测内容变化  
+checkDOMChanges 这个不是十分靠得住，因为他目前是轮询检测offsetWidth、offsetHeight，然后才去调自身的refresh 重新计算滚动区域，但是有时候只检测这个不是很准..
+	// Scrollbar 的相关参数
+	hScrollbar: true, //是否显示水平滚动条
+	vScrollbar: true, //同上垂直滚动条
+	fixedScrollbar: isAndroid, //对andriod的fixed
+	hideScrollbar: isIDevice,  //是否隐藏滚动条
+	fadeScrollbar: isIDevice && has3d, //滚动条是否渐隐渐显
+	scrollbarClass: '', //字定义滚动条的样式名
+通过scrollbar这些参数可以配置iscroll的滚动条，通过scrollbarClass可以自己定义一套滚动条的样式。
+	// Zoom 放大相关的参数
+	zoom: false, //默认是否放大
+	zoomMin: 1, //放大的最小倍数
+	zoomMax: 4, //最大倍数
+	doubleTapZoom: 2, //双触放大几倍
+	wheelAction: 'scroll', //鼠标滚动行为（还可以是zoom）
+// 自定义 Events 的相关参数 
+onRefresh: null, //refresh 的回调，关于自身何时调用refresh 后面会继续谈到
+onBeforeScrollStart: function (e) { e.preventDefault(); }, 
+//开始滚动前的时间回调，默认是阻止浏览器默认行为
+onScrollStart: null, //开始滚动的回调
+onBeforeScrollMove: null, //在内容移动前的回调
+onScrollMove: null, //内容移动的回调
+onBeforeScrollEnd: null, 在滚动结束前的回调
+onScrollEnd: null, //在滚动完成后的回调
+onTouchEnd: null, //手离开屏幕后的回调
+onDestroy: null, //销毁实例的回调
+onZoomStart: null,
+onZoom: null, 
+onZoomEnd: null
+

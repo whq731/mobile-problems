@@ -1,0 +1,89 @@
+在web的表单的输入框里通常需要一些文字信息来提示用户该项可以输入哪种类型的信息。为了节省空间或者为了美观，一般将提示放到输入框中，靠用户的鼠标行为或者输入框中的文字来决定是否显示该信息。这里一般有两种解决方案：
+1 . 当用户没有聚焦表单项且表单项中没有内容时显示默认信息，当用户聚焦了表单项中或者有内容的时候清除默认信息显示正常的信息。这就是人们所称的占位信息。
+2 . 在html5中给表单元素添加一个属性placeholder。顾名思义，它就是占位提示信息。不过它在目前浏览器上的实现与第一种情况的表现有所不一样，聚焦表单元素时，如果没有内容，浏览器不会清除提示信息，只会把提示信息的颜色变淡。当然，你可以通过css来设置placeholder提示信息的样式，如下所示：
+
+     input:-moz-placeholder,            /* Firefox 4 to 18 使用伪类，单个:*/
+    input::-moz-placeholder,            /* Firefox 19+开始使用伪元素，需要双:，原来的伪类也可以使用*/
+    input::-webkit-input-placeholder,   /* webkit内核使用的是伪元素，需要使用双:*/
+     input:-ms-placeholder              /* IE10支持使用伪类的方式*/
+                                        /* IE9-和opera12-都不支持placeholder属性或者对该属性进行样式设置*/
+    {
+        color:#999;
+    }
+以下是使用js来让所有的浏览器都支持placeholder属性，对于默认支持该属性的浏览器将使用默认行为，如果不支持的话使用focus和blur的事件来模拟该事件。
+
+    // placeholder for all browsers. If browser support placeholder attribute, this will use the 
+    // default feature. Otherwise use focus and blur event to simulate the feature.
+    (function(){
+        // if support placeholder attribute do nothing
+        if( 'placeholder' in document.createElement('input') ) return;
+        // hoder class, the style defined in other place
+        var holderClass = 'on-holder';
+        // hoder attribute name
+        var holderAttr  = 'placeholder';
+        // time regexp
+        var trimExp     = /(^\s+)|(\s+$)/g;
+        // remove dom class name
+        var removeClass = function( dom , cname ){
+            if( !dom.className ) return;
+            dom.className = ( ' ' + dom.className + ' ' )
+                        .replace(' ' + cname + ' ' , ' ')
+                        .replace(trimExp,'');
+        }
+        // add class name to dom
+        var addClass    = function( dom , cname ){
+            if( !dom.className ){
+                dom.className = cname;
+            }
+            else {
+                removeClass( dom , cname );
+                dom.className = dom.className + ' ' + cname;
+            }
+        }
+        // event bind
+        var bind = document.addEventListener ? function( dom , event , fn ){
+                return dom.addEventListener( event , fn , false );
+            } : function( dom , event , fn ){
+                return dom.attachEvent( 'on' + event , fn );
+            };
+        // placehoder for element
+        var bindPlaceHolder4Element = function( dom ){
+                bind( dom , 'focus' , function(){
+                    var hText = this.getAttribute( holderAttr );
+                    if(this.value == hText){
+                        this.value = '';
+                        addClass( this , holderClass );
+                    }
+                });
+                bind( dom , 'blur' , function(){
+                    if(this.value == ''){
+                        this.value = this.getAttribute( holderAttr );
+                        removeClass( this , holderClass );
+                    }
+                });
+// init first time
+                if(dom.value == ''){
+                    dom.value = dom.getAttribute( holderAttr );
+                    addClass( dom , holderClass );
+                }
+            }
+            // placehoder for tagname
+            var bindElementTag    = function(tag){
+                var els = document.getElementsByTagName( tag );
+                var tmp = null;
+                for ( var i = 0 , len = els.length ; i < len ; i++ ){
+                    tmp = els[i];
+                    if( tmp.getAttribute( holderAttr ) ) {
+                        bindPlaceHolder4Element( tmp );
+                    }
+                }
+            };
+        // after window load, init all the 'placeholder' element
+        bind(window , 'load' , function(){
+            bindElementTag( 'input' );
+            bindElementTag( 'textarea' );
+        });
+    })();
+
+源文档 <http://myjser.com/?cat=6> 
+

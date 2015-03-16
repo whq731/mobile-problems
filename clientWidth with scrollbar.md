@@ -1,0 +1,7 @@
+document.documentElement.clientWidth
+
+
+为实际浏览器宽度
+注意如果包含滚动条时需要减去滚动条宽度
+chrome为15px
+滚动条的出现会直接影响页面内容居中显示的位置
